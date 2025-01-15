@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Svg from "../partials/Svg";
 
 import Page from "../partials/Page";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
@@ -67,13 +68,7 @@ const Radioisotope = () => {
 
   return (
     <Page currentUser={currentUser}>
-      <a
-        href="/radioisotopes"
-        className="flex items-center gap-2 max-w-max font-semibold text-sky-700 hover:text-sky-900 hover:underline"
-      >
-        <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
-        <span>Back to radioisotopes list</span>
-      </a>
+      <ButtonBack path="/radioisotopes">Back to radioisotopes list</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (

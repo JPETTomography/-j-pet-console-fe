@@ -23,8 +23,16 @@ a, button, label, input, select {
   @apply transition-colors duration-300;
 }
 
+.link {
+  @apply flex justify-center items-center gap-3 max-w-max;
+}
+
+.link-primary {
+  @apply link font-semibold text-sky-700 hover:text-sky-900 hover:underline;
+}
+
 .btn {
-  @apply flex justify-center items-center gap-3 max-w-max px-5 py-3 rounded;
+  @apply link px-5 py-3 rounded;
 }
 
 .btn-primary {

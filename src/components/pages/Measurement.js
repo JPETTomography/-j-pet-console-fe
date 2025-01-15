@@ -11,6 +11,7 @@ import {
 } from "../../utils/measurements";
 import Tabs from "../partials/Tabs";
 import Tag from "../partials/Tag";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
@@ -74,13 +75,9 @@ const Measurement = () => {
 
   return (
     <Page currentUser={currentUser}>
-      <a
-        href={`/experiments/${measurement.experiment_id}`}
-        className="flex items-center gap-2 max-w-max font-semibold text-sky-700 hover:text-sky-900 hover:underline"
-      >
-        <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
-        <span>Back to experiment</span>
-      </a>
+      <ButtonBack path={`/experiments/${measurement.experiment_id}`}>
+        Back to the experiment
+      </ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (

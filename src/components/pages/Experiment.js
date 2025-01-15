@@ -7,6 +7,7 @@ import { formatDate } from "../../utils/formatDate";
 import Svg from "../partials/Svg";
 
 import Badge from "../partials/Badge";
+import ButtonBack from "../partials/ButtonBack";
 
 import Page from "../partials/Page";
 
@@ -72,13 +73,7 @@ const Experiment = () => {
 
   return (
     <Page currentUser={currentUser}>
-      <a
-        href="/experiments"
-        className="flex items-center gap-2 max-w-max font-semibold text-sky-700 hover:text-sky-900 hover:underline"
-      >
-        <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
-        <span>Back to experiments list</span>
-      </a>
+      <ButtonBack path={"/experiments"}>Back to experiments list</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (

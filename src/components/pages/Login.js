@@ -111,7 +111,7 @@ const Login = () => {
             Please contact with our{" "}
             <a
               href={`mailto:${CONTACT_MAIL}`}
-              className="text-sky-600 hover:text-sky-800 font-semibold focus:outline-offset-4"
+              className="link-primary !inline-flex"
             >
               administration
             </a>
