@@ -53,6 +53,15 @@ a, button {
   @apply after:content-['_*'];
 }
 
+select {
+  -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+  background: url(/public/icons/chevron-down.svg) no-repeat center / contain;
+	background-size: 1.25rem;
+	background-position: calc(100% - 0.5rem);
+}
+
 /* Loaders - https://css-loaders.com/spinner/ */
 /* Loader #15 */
 .loader {
