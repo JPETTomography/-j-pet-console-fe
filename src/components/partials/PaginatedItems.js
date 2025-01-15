@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import ReactPaginate from "react-paginate";
 
+import ButtonGroup from "./ButtonGroup";
 import Svg from "./Svg";
 
 function PaginatedItems(props) {
@@ -10,6 +11,7 @@ function PaginatedItems(props) {
     items,
     ItemComponent,
     itemsPerPage = 5,
+    newButton,
   } = props;
 
   const [itemOffset, setItemOffset] = useState(0);
@@ -28,6 +30,8 @@ function PaginatedItems(props) {
 
   return (
     <div className="grid gap-8">
+      {newButton && <ButtonGroup>{newButton}</ButtonGroup>}
+
       <ul id={id} className="list-none grid gap-4">
         {currentItems &&
           currentItems.map((item, index) => (
@@ -36,6 +40,8 @@ function PaginatedItems(props) {
             </li>
           ))}
       </ul>
+
+      {newButton && <ButtonGroup>{newButton}</ButtonGroup>}
 
       <div className="flex justify-between items-center gap-4 pt-6 border-t text-sm">
         <p>
