@@ -2,7 +2,7 @@ import Badge from "./Badge";
 
 import Svg from "./Svg";
 
-const ExperimentCard = (props) => {
+const UserCard = (props) => {
   const { id, name, email, role } = props;
 
   return (
@@ -30,4 +30,4 @@ const ExperimentCard = (props) => {
   );
 };
 
-export default ExperimentCard;
+export default UserCard;
