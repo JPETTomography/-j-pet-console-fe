@@ -71,7 +71,7 @@ const Detector = () => {
     <Page currentUser={currentUser}>
       <a
         href="/detectors"
-        className="flex items-center gap-2 max-w-max font-semibold	text-sky-700 hover:text-sky-900 hover:underline transition-colors duration-300"
+        className="flex items-center gap-2 max-w-max font-semibold text-sky-700 hover:text-sky-900 hover:underline"
       >
         <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
         <span>Back to detectors list</span>

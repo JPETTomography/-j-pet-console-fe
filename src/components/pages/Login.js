@@ -74,10 +74,7 @@ const Login = () => {
             className="flex flex-col gap-5 max-w-3xl"
           >
             <div className="grid gap-2 focus-within:text-sky-700 group/input">
-              <label
-                htmlFor="login"
-                className="max-w-max hover:text-sky-700 transition-colors duration-300"
-              >
+              <label htmlFor="login" className="max-w-max hover:text-sky-700">
                 Login
               </label>
               <input
@@ -86,7 +83,7 @@ const Login = () => {
                 name="login"
                 required
                 onChange={(e) => setUsername(e.target.value)}
-                className="p-4 rounded border border-slate-300 group-hover/input:border-sky-700 focus:outline-sky-700 text-slate-800 transition-colors duration-300"
+                className="p-4 rounded border border-slate-300 group-hover/input:border-sky-700 focus:outline-sky-700 text-slate-800"
               />
             </div>
             <div className="grid gap-2">
@@ -94,7 +91,7 @@ const Login = () => {
 
               <a
                 href={`mailto:${CONTACT_MAIL}`}
-                className="max-w-max ml-auto text-xs text-slate-700 hover:text-slate-900 hover:underline focus:outline-offset-4 transition-colors duration-300"
+                className="max-w-max ml-auto text-xs text-slate-700 hover:text-slate-900 hover:underline focus:outline-offset-4"
               >
                 Forgot password
               </a>
@@ -114,7 +111,7 @@ const Login = () => {
             Please contact with our{" "}
             <a
               href={`mailto:${CONTACT_MAIL}`}
-              className="text-sky-600 hover:text-sky-800 font-semibold focus:outline-offset-4 transition-colors duration-300"
+              className="text-sky-600 hover:text-sky-800 font-semibold focus:outline-offset-4"
             >
               administration
             </a>

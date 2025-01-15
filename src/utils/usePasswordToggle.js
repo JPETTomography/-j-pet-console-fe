@@ -11,7 +11,7 @@ const usePasswordToggle = () => {
     <button
       type="button"
       onClick={() => setVisibility((visible) => !visible)}
-      className="absolute top-3.5 right-2 text-slate-400 outline-offset-2 hover:text-slate-600 focus:text-slate-600 transition-colors duration-300"
+      className="absolute top-3.5 right-2 text-slate-400 outline-offset-2 hover:text-slate-600 focus:text-slate-600"
     >
       <Svg
         src={visible ? "/icons/eye-slash.svg" : "/icons/eye.svg"}
