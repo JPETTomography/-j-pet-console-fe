@@ -52,6 +52,7 @@ const Login = () => {
       }
     } catch (err) {
       setError(err.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -67,7 +68,11 @@ const Login = () => {
           />
 
           <h1 className="text-center">Login</h1>
-          <form onSubmit={handleSubmit} className="grid gap-8">
+          <form
+            noValidate
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-5 max-w-3xl"
+          >
             <div className="grid gap-2 focus-within:text-sky-700 group/input">
               <label
                 htmlFor="login"
@@ -79,6 +84,7 @@ const Login = () => {
                 type="text"
                 id="login"
                 name="login"
+                required
                 onChange={(e) => setUsername(e.target.value)}
                 className="p-4 rounded border border-slate-300 group-hover/input:border-sky-700 focus:outline-sky-700 text-slate-800 transition-colors duration-300"
               />
@@ -96,14 +102,14 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="p-4 rounded bg-sky-700 hover:bg-sky-900 focus:outline-sky-700 focus:outline-offset-4 text-white font-medium disabled:bg-slate-400"
+              className="btn-primary !max-w-none"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
-            {error && <p className="text-red-600">{error}</p>}
+            {error && <p className="text-rose-700">{error}</p>}
           </form>
           <p className="text-center">
-            You don’t have an account yet?
+            You don't have an account yet?
             <br />
             Please contact with our{" "}
             <a

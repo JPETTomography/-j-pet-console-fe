@@ -49,6 +49,10 @@ a, button {
   @apply flex-1;
 }
 
+.group\/input:has([required]) label {
+  @apply after:content-['_*'];
+}
+
 /* Loaders - https://css-loaders.com/spinner/ */
 /* Loader #15 */
 .loader {
