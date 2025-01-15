@@ -1,15 +1,14 @@
 import Svg from "../partials/Svg";
 
+import ErrorCard from "../partials/ErrorCard";
+
 const FetchError = (props) => {
   const { error, fetchFun } = props;
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-4 text-xl font-medium">
       <p>The following error occured while loading the list:</p>
-      <div className="flex gap-4 w-full max-w-4xl p-4 rounded-xl bg-red-50 border border-red-600 text-red-600">
-        <Svg src="/icons/exclamation-circle.svg" className="w-6 h-6" />
-        {error}
-      </div>
+      <ErrorCard>{error}</ErrorCard>
       <p>Please, try again or check your connection.</p>
       <button
         onClick={fetchFun}
