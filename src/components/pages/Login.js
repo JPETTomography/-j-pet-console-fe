@@ -3,6 +3,7 @@ import { CONTACT_MAIL } from "../../const";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Form from "../partials/Form";
 import PasswordInput from "../partials/PasswordInput";
 
 const Login = () => {
@@ -68,11 +69,7 @@ const Login = () => {
           />
 
           <h1 className="text-center">Login</h1>
-          <form
-            noValidate
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-5 max-w-3xl"
-          >
+          <Form onSubmit={handleSubmit}>
             <div className="grid gap-2 focus-within:text-sky-700 group/input">
               <label htmlFor="login" className="max-w-max hover:text-sky-700">
                 Login
@@ -104,7 +101,7 @@ const Login = () => {
               {loading ? "Logging in..." : "Login"}
             </button>
             {error && <p className="text-rose-700">{error}</p>}
-          </form>
+          </Form>
           <p className="text-center">
             You don't have an account yet?
             <br />
