@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Form from "../partials/Form";
-import PasswordInput from "../partials/PasswordInput";
+import InputPassword from "../partials/Input/InputPassword";
+import InputText from "../partials/Input/InputText";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -70,21 +71,10 @@ const Login = () => {
 
           <h1 className="text-center">Login</h1>
           <Form onSubmit={handleSubmit}>
-            <div className="grid gap-2 focus-within:text-sky-700 group/input">
-              <label htmlFor="login" className="max-w-max hover:text-sky-700">
-                Login
-              </label>
-              <input
-                type="text"
-                id="login"
-                name="login"
-                required
-                onChange={(e) => setUsername(e.target.value)}
-                className="p-4 rounded border border-slate-300 group-hover/input:border-sky-700 focus:outline-sky-700 text-slate-800"
-              />
-            </div>
+            <InputText name="login" setValue={setUsername} required />
+
             <div className="grid gap-2">
-              <PasswordInput setPassword={setPassword} />
+              <InputPassword setPassword={setPassword} />
 
               <a
                 href={`mailto:${CONTACT_MAIL}`}
