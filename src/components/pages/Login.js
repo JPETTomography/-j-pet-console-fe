@@ -8,7 +8,7 @@ import InputPassword from "../partials/Input/InputPassword";
 import InputText from "../partials/Input/InputText";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const validateForm = () => {
-    if (!username || !password) {
-      setError("Username and password are required");
+    if (!email || !password) {
+      setError("Email and password are required");
       return false;
     }
     setError("");
@@ -30,7 +30,7 @@ const Login = () => {
     setLoading(true);
 
     const formDetails = new URLSearchParams();
-    formDetails.append("username", username);
+    formDetails.append("username", email);
     formDetails.append("password", password);
 
     try {
@@ -71,7 +71,7 @@ const Login = () => {
 
           <h1 className="text-center">Login</h1>
           <Form onSubmit={handleSubmit}>
-            <InputText name="login" setValue={setUsername} required />
+            <InputText name="email" setValue={setEmail} required />
 
             <div className="grid gap-2">
               <InputPassword setPassword={setPassword} />
