@@ -6,6 +6,7 @@ import Svg from "../partials/Svg";
 
 import Page from "../partials/Page";
 import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
@@ -79,18 +80,19 @@ const Radioisotope = () => {
             <div className="flex justify-between items-center gap-4">
               <h1>{radioisotope.name}</h1>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="grid grid-cols-1 gap-4 pt-2">
               <p className="text-xl">{radioisotope.description}</p>
-            </div>
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Svg src="/icons/bolt.svg" className="w-6 h-6" />
-                {radioisotope.activity}
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <Svg src="/icons/bolt.svg" className="w-6 h-6" />
+                  {radioisotope.activity}
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Svg src="/icons/clock.svg" className="w-6 h-6" />
+                  {radioisotope.halflife}
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Svg src="/icons/clock.svg" className="w-6 h-6" />
-                {radioisotope.halflife}
-              </div>
+              <ButtonEdit path={`/radioisotopes/${radioisotope.id}/edit`} />
             </div>
           </div>
         </>

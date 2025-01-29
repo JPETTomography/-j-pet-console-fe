@@ -1,21 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
-import RadioisotopeCard from "../partials/RadioisotopeCard";
+import { useParams } from "react-router-dom";
 
 import Page from "../partials/Page";
-import PaginatedItems from "../partials/PaginatedItems";
-import ButtonNew from "../partials/ButtonNew";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
+import RadioisotopeForm from "../partials/RadioisotopeForm";
 
-const RadioisotopesList = () => {
+const RadioisotopeEdit = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState({});
 
-  const [radioisotopes, setRadioisotopes] = useState([]);
+  const { radioisotope_id } = useParams();
+
+  const [radioisotope, setRadioisotope] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,51 +40,48 @@ const RadioisotopesList = () => {
     [navigate]
   );
 
-  const fetchRadioisotopes = useCallback(async () => {
+  const fetchRadioisotope = useCallback(async () => {
     setLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
     try {
       await verifyToken(token);
       const response = await fetch(
-        `${process.env.REACT_APP_API_SOURCE}/radioisotopes`
+        `${process.env.REACT_APP_API_SOURCE}/radioisotopes/${radioisotope_id}`
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch radioisotopes");
+        throw new Error("Failed to fetch radioisotope");
       }
       const data = await response.json();
-      setRadioisotopes(data);
+      setRadioisotope(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [verifyToken]);
+  }, [verifyToken, radioisotope_id]);
 
   useEffect(() => {
-    fetchRadioisotopes();
-  }, [fetchRadioisotopes]);
+    fetchRadioisotope();
+  }, [fetchRadioisotope, radioisotope_id]);
 
   return (
     <Page currentUser={currentUser}>
-      <h1>Radioisotopes List</h1>
+      <ButtonBack path={`/radioisotopes/${radioisotope.id}`}>
+        Back to the radioisotope
+      </ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
-        <FetchError error={error} fetchFun={fetchRadioisotopes} />
+        <FetchError error={error} fetchFun={fetchRadioisotope} />
       ) : (
-        <PaginatedItems
-          items={radioisotopes}
-          ItemComponent={RadioisotopeCard}
-          newButton={
-            <ButtonNew path="/radioisotopes/new">
-              Add new radioisotope
-            </ButtonNew>
-          }
-        />
+        <>
+          <h1>Edit radioisotope - {radioisotope.name}</h1>
+          <RadioisotopeForm radioisotope={radioisotope} />
+        </>
       )}
     </Page>
   );
 };
 
-export default RadioisotopesList;
+export default RadioisotopeEdit;
