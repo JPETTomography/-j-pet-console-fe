@@ -7,7 +7,9 @@ import { formatDate } from "../../utils/formatDate";
 import Svg from "../partials/Svg";
 
 import Badge from "../partials/Badge";
+import ButtonGroup from "../partials/ButtonGroup";
 import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import Page from "../partials/Page";
 
@@ -109,6 +111,9 @@ const Experiment = () => {
                   {experiment.coordinator.name}
                 </div>
               </div>
+              <ButtonGroup>
+                <ButtonEdit path={`/experiments/${experiment.id}/edit`} />
+              </ButtonGroup>
             </div>
           </div>
         </>
