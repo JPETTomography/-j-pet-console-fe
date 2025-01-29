@@ -1,21 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
-import UserCard from "../partials/UserCard";
-import ButtonNew from "../partials/ButtonNew";
+import { useParams } from "react-router-dom";
 
 import Page from "../partials/Page";
-import PaginatedItems from "../partials/PaginatedItems";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
+import UserForm from "../partials/UserForm";
 
-const UsersList = () => {
+const UserEdit = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState({});
 
-  const [users, setUsers] = useState([]);
+  const { user_id } = useParams();
+
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,45 +40,46 @@ const UsersList = () => {
     [navigate]
   );
 
-  const fetchUsers = useCallback(async () => {
+  const fetchUser = useCallback(async () => {
     setLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
     try {
       await verifyToken(token);
-      const response = await fetch(`${process.env.REACT_APP_API_SOURCE}/users`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_SOURCE}/users/${user_id}`
+      );
       if (!response.ok) {
-        throw new Error("Failed to fetch users");
+        throw new Error("Failed to fetch user");
       }
       const data = await response.json();
-      setUsers(data);
+      setUser(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [verifyToken]);
+  }, [verifyToken, user_id]);
 
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    fetchUser();
+  }, [fetchUser, user_id]);
 
   return (
     <Page currentUser={currentUser}>
-      <h1>Users List</h1>
+      <ButtonBack path={`/users/${user.id}`}>Back to the user</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
-        <FetchError error={error} fetchFun={fetchUsers} />
+        <FetchError error={error} fetchFun={fetchUser} />
       ) : (
-        <PaginatedItems
-          items={users}
-          ItemComponent={UserCard}
-          newButton={<ButtonNew path="/users/new">Add new user</ButtonNew>}
-        />
+        <>
+          <h1>Edit user - {user.name}</h1>
+          <UserForm user={user} />
+        </>
       )}
     </Page>
   );
 };
 
-export default UsersList;
+export default UserEdit;

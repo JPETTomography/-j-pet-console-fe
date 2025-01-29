@@ -6,6 +6,7 @@ import Svg from "../partials/Svg";
 
 import Badge from "../partials/Badge";
 import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import Page from "../partials/Page";
 
@@ -91,6 +92,7 @@ const User = () => {
                 <Svg src="/icons/at-symbol.svg" className="w-6 h-6" />
                 {user.email}
               </div>
+              <ButtonEdit path={`/users/${user.id}/edit`} />
             </div>
           </div>
         </>
