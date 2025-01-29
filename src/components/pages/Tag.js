@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import Tag from "../partials/Tag";
 import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import Page from "../partials/Page";
 
@@ -82,8 +83,9 @@ const Experiment = () => {
                 <Tag name={tag.name} color={tag.color} />
               </div>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="grid grid-cols-1 gap-4 pt-2">
               <p className="text-xl">{tag.description}</p>
+              <ButtonEdit path={`/tags/${tag.id}/edit`} />
             </div>
           </div>
         </>

@@ -1,20 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import TagCard from "../partials/TagCard";
 import Page from "../partials/Page";
-import PaginatedItems from "../partials/PaginatedItems";
-import ButtonNew from "../partials/ButtonNew";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
+import TagForm from "../partials/TagForm";
 
-const TagsList = () => {
+const TagEdit = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState({});
 
-  const [tags, setTags] = useState([]);
+  const { tag_id } = useParams();
+
+  const [tag, setTag] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -38,45 +40,46 @@ const TagsList = () => {
     [navigate]
   );
 
-  const fetchTags = useCallback(async () => {
+  const fetchTag = useCallback(async () => {
     setLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
     try {
       await verifyToken(token);
-      const response = await fetch(`${process.env.REACT_APP_API_SOURCE}/tags`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_SOURCE}/tags/${tag_id}`
+      );
       if (!response.ok) {
-        throw new Error("Failed to fetch tags");
+        throw new Error("Failed to fetch tag");
       }
       const data = await response.json();
-      setTags(data);
+      setTag(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [verifyToken]);
+  }, [verifyToken, tag_id]);
 
   useEffect(() => {
-    fetchTags();
-  }, [fetchTags]);
+    fetchTag();
+  }, [fetchTag, tag_id]);
 
   return (
     <Page currentUser={currentUser}>
-      <h1>Tags List</h1>
+      <ButtonBack path={`/tags/${tag.id}`}>Back to the tag</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
-        <FetchError error={error} fetchFun={fetchTags} />
+        <FetchError error={error} fetchFun={fetchTag} />
       ) : (
-        <PaginatedItems
-          items={tags}
-          ItemComponent={TagCard}
-          newButton={<ButtonNew path="/tags/new">Add new tag</ButtonNew>}
-        />
+        <>
+          <h1>Edit tag - {tag.name}</h1>
+          <TagForm tag={tag} />
+        </>
       )}
     </Page>
   );
 };
 
-export default TagsList;
+export default TagEdit;
