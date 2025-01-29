@@ -5,6 +5,7 @@ import RadioisotopeCard from "../partials/RadioisotopeCard";
 
 import Page from "../partials/Page";
 import PaginatedItems from "../partials/PaginatedItems";
+import ButtonNew from "../partials/ButtonNew";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
@@ -74,6 +75,11 @@ const RadioisotopesList = () => {
         <PaginatedItems
           items={radioisotopes}
           ItemComponent={RadioisotopeCard}
+          newButton={
+            <ButtonNew path="/radioisotopes/new">
+              Add new radioisotope
+            </ButtonNew>
+          }
         />
       )}
     </Page>

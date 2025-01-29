@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import Svg from "../partials/Svg";
 
 import Badge from "../partials/Badge";
+import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import Page from "../partials/Page";
 
@@ -69,13 +71,7 @@ const Detector = () => {
 
   return (
     <Page currentUser={currentUser}>
-      <a
-        href="/detectors"
-        className="flex items-center gap-2 max-w-max font-semibold	text-sky-700 hover:text-sky-900 hover:underline transition-colors duration-300"
-      >
-        <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
-        <span>Back to detectors list</span>
-      </a>
+      <ButtonBack path={"/detectors"}>Back to detectors list</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
@@ -89,14 +85,13 @@ const Detector = () => {
                 <Badge status={detector.status} />
               </div>
             </div>
-            <div className="flex justify-between gap-4">
-              <p className="text-xl">{detector.description}</p>
-            </div>
             <div className="grid grid-cols-1 gap-4 pt-2">
+              <p className="text-xl">{detector.description}</p>
               <div className="flex items-center gap-2 text-sm">
                 <Svg src="/icons/globe-europe-africa.svg" className="w-6 h-6" />
                 {detector.agent_code}
               </div>
+              <ButtonEdit path={`/detectors/${detector.id}/edit`} />
             </div>
           </div>
         </>

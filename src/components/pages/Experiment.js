@@ -7,6 +7,9 @@ import { formatDate } from "../../utils/formatDate";
 import Svg from "../partials/Svg";
 
 import Badge from "../partials/Badge";
+import ButtonGroup from "../partials/ButtonGroup";
+import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import Page from "../partials/Page";
 
@@ -72,13 +75,7 @@ const Experiment = () => {
 
   return (
     <Page currentUser={currentUser}>
-      <a
-        href="/experiments"
-        className="flex items-center gap-2 max-w-max font-semibold	text-sky-700 hover:text-sky-900 hover:underline transition-colors duration-300"
-      >
-        <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
-        <span>Back to experiments list</span>
-      </a>
+      <ButtonBack path={"/experiments"}>Back to experiments list</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
@@ -114,6 +111,9 @@ const Experiment = () => {
                   {experiment.coordinator.name}
                 </div>
               </div>
+              <ButtonGroup>
+                <ButtonEdit path={`/experiments/${experiment.id}/edit`} />
+              </ButtonGroup>
             </div>
           </div>
         </>

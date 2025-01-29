@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-import Svg from "../partials/Svg";
-
 import Tag from "../partials/Tag";
+import ButtonBack from "../partials/ButtonBack";
+import ButtonEdit from "../partials/ButtonEdit";
 
 import Page from "../partials/Page";
 
@@ -69,13 +69,7 @@ const Experiment = () => {
 
   return (
     <Page currentUser={currentUser}>
-      <a
-        href="/tags"
-        className="flex items-center gap-2 max-w-max font-semibold	text-sky-700 hover:text-sky-900 hover:underline transition-colors duration-300"
-      >
-        <Svg src="/icons/arrow-left.svg" className="w-5 h-5" />
-        <span>Back to tags list</span>
-      </a>
+      <ButtonBack path="/tags">Back to tags list</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
@@ -89,8 +83,9 @@ const Experiment = () => {
                 <Tag name={tag.name} color={tag.color} />
               </div>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="grid grid-cols-1 gap-4 pt-2">
               <p className="text-xl">{tag.description}</p>
+              <ButtonEdit path={`/tags/${tag.id}/edit`} />
             </div>
           </div>
         </>

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-function navFoRole(role) {
+function navForRole(role) {
   switch (role) {
     case "shifter":
       return ["experiments", "tags", "radioisotopes"];
@@ -19,7 +19,7 @@ const Nav = (props) => {
   return (
     <nav>
       <ul className="list-none flex items-center gap-16">
-        {navFoRole(currentUserRole).map((navlink, index) => {
+        {navForRole(currentUserRole).map((navlink, index) => {
           return (
             <li key={index}>
               <NavLink

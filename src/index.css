@@ -19,8 +19,55 @@ h2 {
   @apply m-0 text-xl font-medium;
 }
 
-a, button {
+a, button, label, input, select {
   @apply transition-colors duration-300;
+}
+
+.link {
+  @apply flex justify-center items-center gap-3 max-w-max;
+}
+
+.link-primary {
+  @apply link font-semibold text-sky-700 hover:text-sky-900 hover:underline;
+}
+
+.btn {
+  @apply link px-5 py-3 rounded;
+}
+
+.btn-primary {
+  @apply btn text-white bg-sky-700 outline-none ring-sky-200
+  hover:bg-sky-600
+  focus-visible:ring-2 focus-visible:bg-sky-600
+  disabled:bg-slate-400 disabled:cursor-not-allowed;
+}
+
+.btn-primary-outline {
+  @apply btn text-sky-600 bg-white border border-sky-600 outline-none ring-sky-200
+  hover:text-white hover:bg-sky-600
+  focus-visible:ring-2
+  disabled:text-slate-400 disabled:bg-inherit disabled:border-slate-400 disabled:cursor-not-allowed;
+}
+
+.button-group {
+  @apply flex gap-4 items-center justify-end;
+}
+
+.button-group > .button-group {
+  @apply flex-1;
+}
+
+.group\/input:has([required]) label {
+  @apply after:content-['_*'];
+}
+
+select {
+  -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+  background: url(/public/icons/chevron-down.svg) no-repeat center / contain;
+	background-size: 1.25rem;
+	background-position: calc(100% - 0.5rem);
 }
 
 /* Loaders - https://css-loaders.com/spinner/ */

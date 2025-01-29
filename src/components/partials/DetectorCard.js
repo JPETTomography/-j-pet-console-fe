@@ -8,7 +8,7 @@ const DetectorCard = (props) => {
   return (
     <a
       href={`/detectors/${id}`}
-      className="flex flex-col gap-4 p-4 rounded-lg border border-slate-200 divide-y divide-slate-200 hover:bg-sky-50 transition-colors duration-300"
+      className="flex flex-col gap-4 p-4 rounded-lg border border-slate-200 divide-y divide-slate-200 hover:bg-sky-50"
     >
       <div className="grid gap-2">
         <div className="flex justify-between gap-4">

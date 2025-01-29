@@ -1,21 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
-import DetectorCard from "../partials/DetectorCard";
+import { useParams } from "react-router-dom";
 
 import Page from "../partials/Page";
-import PaginatedItems from "../partials/PaginatedItems";
-import ButtonNew from "../partials/ButtonNew";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
+import UserForm from "../partials/UserForm";
 
-const DetectorsList = () => {
+const UserEdit = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState({});
 
-  const [detectors, setDetectors] = useState([]);
+  const { user_id } = useParams();
+
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,49 +40,46 @@ const DetectorsList = () => {
     [navigate]
   );
 
-  const fetchDetectors = useCallback(async () => {
+  const fetchUser = useCallback(async () => {
     setLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
     try {
       await verifyToken(token);
       const response = await fetch(
-        `${process.env.REACT_APP_API_SOURCE}/detectors`
+        `${process.env.REACT_APP_API_SOURCE}/users/${user_id}`
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch detectors");
+        throw new Error("Failed to fetch user");
       }
       const data = await response.json();
-      setDetectors(data);
+      setUser(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [verifyToken]);
+  }, [verifyToken, user_id]);
 
   useEffect(() => {
-    fetchDetectors();
-  }, [fetchDetectors]);
+    fetchUser();
+  }, [fetchUser, user_id]);
 
   return (
     <Page currentUser={currentUser}>
-      <h1>Detectors List</h1>
+      <ButtonBack path={`/users/${user.id}`}>Back to the user</ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
-        <FetchError error={error} fetchFun={fetchDetectors} />
+        <FetchError error={error} fetchFun={fetchUser} />
       ) : (
-        <PaginatedItems
-          items={detectors}
-          ItemComponent={DetectorCard}
-          newButton={
-            <ButtonNew path="/detectors/new">Add new detector</ButtonNew>
-          }
-        />
+        <>
+          <h1>Edit user - {user.name}</h1>
+          <UserForm user={user} />
+        </>
       )}
     </Page>
   );
 };
 
-export default DetectorsList;
+export default UserEdit;

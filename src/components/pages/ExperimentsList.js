@@ -5,6 +5,7 @@ import ExperimentCard from "../partials/ExperimentCard";
 
 import Page from "../partials/Page";
 import PaginatedItems from "../partials/PaginatedItems";
+import ButtonNew from "../partials/ButtonNew";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
@@ -71,7 +72,13 @@ const ExperimentsList = () => {
       ) : error ? (
         <FetchError error={error} fetchFun={fetchExperiments} />
       ) : (
-        <PaginatedItems items={experiments} ItemComponent={ExperimentCard} />
+        <PaginatedItems
+          items={experiments}
+          ItemComponent={ExperimentCard}
+          newButton={
+            <ButtonNew path="/experiments/new">Add new experiment</ButtonNew>
+          }
+        />
       )}
     </Page>
   );

@@ -3,10 +3,12 @@ import { CONTACT_MAIL } from "../../const";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import PasswordInput from "../partials/PasswordInput";
+import Form from "../partials/Form";
+import InputPassword from "../partials/Input/InputPassword";
+import InputText from "../partials/Input/InputText";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,8 +16,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const validateForm = () => {
-    if (!username || !password) {
-      setError("Username and password are required");
+    if (!email || !password) {
+      setError("Email and password are required");
       return false;
     }
     setError("");
@@ -28,7 +30,7 @@ const Login = () => {
     setLoading(true);
 
     const formDetails = new URLSearchParams();
-    formDetails.append("username", username);
+    formDetails.append("username", email);
     formDetails.append("password", password);
 
     try {
@@ -52,6 +54,7 @@ const Login = () => {
       }
     } catch (err) {
       setError(err.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -67,28 +70,15 @@ const Login = () => {
           />
 
           <h1 className="text-center">Login</h1>
-          <form onSubmit={handleSubmit} className="grid gap-8">
-            <div className="grid gap-2 focus-within:text-sky-700 group/input">
-              <label
-                htmlFor="login"
-                className="max-w-max hover:text-sky-700 transition-colors duration-300"
-              >
-                Login
-              </label>
-              <input
-                type="text"
-                id="login"
-                name="login"
-                onChange={(e) => setUsername(e.target.value)}
-                className="p-4 rounded border border-slate-300 group-hover/input:border-sky-700 focus:outline-sky-700 text-slate-800 transition-colors duration-300"
-              />
-            </div>
+          <Form onSubmit={handleSubmit}>
+            <InputText name="email" setValue={setEmail} required />
+
             <div className="grid gap-2">
-              <PasswordInput setPassword={setPassword} />
+              <InputPassword setPassword={setPassword} />
 
               <a
                 href={`mailto:${CONTACT_MAIL}`}
-                className="max-w-max ml-auto text-xs text-slate-700 hover:text-slate-900 hover:underline focus:outline-offset-4 transition-colors duration-300"
+                className="max-w-max ml-auto text-xs text-slate-700 hover:text-slate-900 hover:underline focus:outline-offset-4"
               >
                 Forgot password
               </a>
@@ -96,19 +86,19 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="p-4 rounded bg-sky-700 hover:bg-sky-900 focus:outline-sky-700 focus:outline-offset-4 text-white font-medium disabled:bg-slate-400"
+              className="btn-primary !max-w-none"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
-            {error && <p className="text-red-600">{error}</p>}
-          </form>
+            {error && <p className="text-rose-700">{error}</p>}
+          </Form>
           <p className="text-center">
-            You don’t have an account yet?
+            You don't have an account yet?
             <br />
             Please contact with our{" "}
             <a
               href={`mailto:${CONTACT_MAIL}`}
-              className="text-sky-600 hover:text-sky-800 font-semibold focus:outline-offset-4 transition-colors duration-300"
+              className="link-primary !inline-flex"
             >
               administration
             </a>

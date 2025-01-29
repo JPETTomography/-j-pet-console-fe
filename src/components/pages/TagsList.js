@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TagCard from "../partials/TagCard";
 import Page from "../partials/Page";
 import PaginatedItems from "../partials/PaginatedItems";
+import ButtonNew from "../partials/ButtonNew";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
@@ -68,7 +69,11 @@ const TagsList = () => {
       ) : error ? (
         <FetchError error={error} fetchFun={fetchTags} />
       ) : (
-        <PaginatedItems items={tags} ItemComponent={TagCard} />
+        <PaginatedItems
+          items={tags}
+          ItemComponent={TagCard}
+          newButton={<ButtonNew path="/tags/new">Add new tag</ButtonNew>}
+        />
       )}
     </Page>
   );

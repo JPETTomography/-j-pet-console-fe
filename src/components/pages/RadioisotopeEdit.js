@@ -1,21 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
-import DetectorCard from "../partials/DetectorCard";
+import { useParams } from "react-router-dom";
 
 import Page from "../partials/Page";
-import PaginatedItems from "../partials/PaginatedItems";
-import ButtonNew from "../partials/ButtonNew";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
+import RadioisotopeForm from "../partials/RadioisotopeForm";
 
-const DetectorsList = () => {
+const RadioisotopeEdit = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState({});
 
-  const [detectors, setDetectors] = useState([]);
+  const { radioisotope_id } = useParams();
+
+  const [radioisotope, setRadioisotope] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,49 +40,48 @@ const DetectorsList = () => {
     [navigate]
   );
 
-  const fetchDetectors = useCallback(async () => {
+  const fetchRadioisotope = useCallback(async () => {
     setLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
     try {
       await verifyToken(token);
       const response = await fetch(
-        `${process.env.REACT_APP_API_SOURCE}/detectors`
+        `${process.env.REACT_APP_API_SOURCE}/radioisotopes/${radioisotope_id}`
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch detectors");
+        throw new Error("Failed to fetch radioisotope");
       }
       const data = await response.json();
-      setDetectors(data);
+      setRadioisotope(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [verifyToken]);
+  }, [verifyToken, radioisotope_id]);
 
   useEffect(() => {
-    fetchDetectors();
-  }, [fetchDetectors]);
+    fetchRadioisotope();
+  }, [fetchRadioisotope, radioisotope_id]);
 
   return (
     <Page currentUser={currentUser}>
-      <h1>Detectors List</h1>
+      <ButtonBack path={`/radioisotopes/${radioisotope.id}`}>
+        Back to the radioisotope
+      </ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
-        <FetchError error={error} fetchFun={fetchDetectors} />
+        <FetchError error={error} fetchFun={fetchRadioisotope} />
       ) : (
-        <PaginatedItems
-          items={detectors}
-          ItemComponent={DetectorCard}
-          newButton={
-            <ButtonNew path="/detectors/new">Add new detector</ButtonNew>
-          }
-        />
+        <>
+          <h1>Edit radioisotope - {radioisotope.name}</h1>
+          <RadioisotopeForm radioisotope={radioisotope} />
+        </>
       )}
     </Page>
   );
 };
 
-export default DetectorsList;
+export default RadioisotopeEdit;

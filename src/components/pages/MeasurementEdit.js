@@ -1,21 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
-import DetectorCard from "../partials/DetectorCard";
+import { useParams } from "react-router-dom";
 
 import Page from "../partials/Page";
-import PaginatedItems from "../partials/PaginatedItems";
-import ButtonNew from "../partials/ButtonNew";
+import ButtonBack from "../partials/ButtonBack";
 
 import FetchLoading from "../partials/FetchLoading";
 import FetchError from "../partials/FetchError";
+import MeasurementForm from "../partials/MeasurementForm";
 
-const DetectorsList = () => {
+const MeasurementEdit = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState({});
 
-  const [detectors, setDetectors] = useState([]);
+  const { measurement_id } = useParams();
+
+  const [measurement, setMeasurement] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,49 +40,48 @@ const DetectorsList = () => {
     [navigate]
   );
 
-  const fetchDetectors = useCallback(async () => {
+  const fetchMeasurement = useCallback(async () => {
     setLoading(true);
     setError(null);
     const token = localStorage.getItem("token");
     try {
       await verifyToken(token);
       const response = await fetch(
-        `${process.env.REACT_APP_API_SOURCE}/detectors`
+        `${process.env.REACT_APP_API_SOURCE}/measurements/${measurement_id}`
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch detectors");
+        throw new Error("Failed to fetch measurement");
       }
       const data = await response.json();
-      setDetectors(data);
+      setMeasurement(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [verifyToken]);
+  }, [verifyToken, measurement_id]);
 
   useEffect(() => {
-    fetchDetectors();
-  }, [fetchDetectors]);
+    fetchMeasurement();
+  }, [fetchMeasurement, measurement_id]);
 
   return (
     <Page currentUser={currentUser}>
-      <h1>Detectors List</h1>
+      <ButtonBack path={`/experiments/${measurement.experiment_id}`}>
+        Back to the experiment
+      </ButtonBack>
       {loading ? (
         <FetchLoading />
       ) : error ? (
-        <FetchError error={error} fetchFun={fetchDetectors} />
+        <FetchError error={error} fetchFun={fetchMeasurement} />
       ) : (
-        <PaginatedItems
-          items={detectors}
-          ItemComponent={DetectorCard}
-          newButton={
-            <ButtonNew path="/detectors/new">Add new detector</ButtonNew>
-          }
-        />
+        <>
+          <h1>Edit measurement - {measurement.name}</h1>
+          <MeasurementForm measurement={measurement} />
+        </>
       )}
     </Page>
   );
 };
 
-export default DetectorsList;
+export default MeasurementEdit;

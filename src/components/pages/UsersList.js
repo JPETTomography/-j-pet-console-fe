@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import UserCard from "../partials/UserCard";
+import ButtonNew from "../partials/ButtonNew";
 
 import Page from "../partials/Page";
 import PaginatedItems from "../partials/PaginatedItems";
@@ -69,7 +70,11 @@ const UsersList = () => {
       ) : error ? (
         <FetchError error={error} fetchFun={fetchUsers} />
       ) : (
-        <PaginatedItems items={users} ItemComponent={UserCard} />
+        <PaginatedItems
+          items={users}
+          ItemComponent={UserCard}
+          newButton={<ButtonNew path="/users/new">Add new user</ButtonNew>}
+        />
       )}
     </Page>
   );
